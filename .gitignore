@@ -1,0 +1,40 @@
+# ==========================================
+# WorkSphere - Git Ignore
+# ==========================================
+
+# ---------- IntelliJ IDEA ----------
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# ---------- Java / Maven ----------
+**/target/
+*.class
+
+# ---------- Maven Wrapper ----------
+# Keep .mvn/ and mvnw/mvnw.cmd tracked.
+# They are part of the project.
+
+# ---------- Logs ----------
+*.log
+
+# ---------- Environment / Secrets ----------
+.env
+.env.*
+!.env.example
+
+# ---------- Node / Frontend ----------
+node_modules/
+**/dist/
+**/build/
+
+# ---------- OS ----------
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ---------- Temporary files ----------
+*.tmp
+*.temp
+*.swp
