@@ -16,7 +16,7 @@ const IS_LOCAL = window.location.hostname === 'localhost'
 
 const API_BASE_URL = IS_LOCAL
     ? 'http://localhost:8080/api'
-    : 'https://your-production-backend.onrender.com/api';
+    : 'https://worksphere-backend-jjqq.onrender.com/api';
 
 // ---- AUTHENTICATION ----
 
