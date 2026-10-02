@@ -2,6 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     loadDashboardStats();
     loadEmployeeOverview();
     loadRecentActivity();
+
+    const searchInput = document.getElementById('dashboardSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            loadEmployeeOverview(e.target.value);
+        });
+    }
 });
 
 async function loadDashboardStats() {
@@ -20,22 +27,21 @@ async function loadDashboardStats() {
     }
 }
 
-async function loadEmployeeOverview() {
+async function loadEmployeeOverview(searchQuery = '') {
     const container = document.getElementById('employeeOverview');
     if (!container) return;
 
     try {
-        const response = await fetchWithAuth('/employees?page=0&size=6');
+        const response = await fetchWithAuth(`/dashboard/employees?search=${encodeURIComponent(searchQuery)}`);
         if (!response) return;
 
-        const data = await response.json();
-        const employees = Array.isArray(data) ? data : (data.content || []);
+        const employees = await response.json();
 
         if (employees.length === 0) {
             container.innerHTML = `
                 <div style="text-align:center;padding:30px;color:var(--text-muted)">
                     <i class="fa-solid fa-users" style="font-size:2.5rem;margin-bottom:10px;display:block;opacity:0.4"></i>
-                    No employees yet. <a href="employees.html" style="color:var(--primary-color)">Add the first one</a>.
+                    No employees found. ${searchQuery ? '' : '<a href="employees.html" style="color:var(--primary-color)">Add the first one</a>.'}
                 </div>`;
             Object.assign(container.style, { height: 'auto', background: 'transparent' });
             return;
@@ -49,10 +55,10 @@ async function loadEmployeeOverview() {
                             <div class="emp-avatar">${emp.firstName.charAt(0)}${emp.lastName.charAt(0)}</div>
                             <div>
                                 <strong style="color:var(--text-main)">${emp.firstName} ${emp.lastName}</strong><br>
-                                <small style="color:var(--text-muted)">${emp.department ? emp.department.name : 'No Dept'}</small>
+                                <small style="color:var(--text-muted)">${emp.department || 'No Dept'}</small>
                             </div>
                         </div>
-                        <span class="badge badge-success">Active</span>
+                        <span class="badge ${emp.clockedIn ? 'badge-success' : 'badge-warning'}">${emp.clockedIn ? 'Clocked In' : 'Clocked Out'}</span>
                     </li>
                 `).join('')}
                 <li style="padding:12px 16px;text-align:center">

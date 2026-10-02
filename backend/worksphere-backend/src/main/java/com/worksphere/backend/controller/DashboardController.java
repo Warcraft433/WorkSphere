@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import com.worksphere.backend.entity.Employee;
 
 @RestController
 @RequestMapping("/api/dashboard")
@@ -61,4 +62,31 @@ public class DashboardController {
         long presentToday,
         long clockedIn
     ) {}
+
+    @GetMapping("/employees")
+    public List<EmployeeOverviewDto> getEmployeeOverview(@RequestParam(required = false, defaultValue = "") String search) {
+        LocalDate today = LocalDate.now();
+        List<Attendance> todayAttendance = attendanceRepository.findByWorkDate(today);
+        
+        List<Employee> employees;
+        if (search != null && !search.trim().isEmpty()) {
+            employees = employeeRepository.search(search);
+        } else {
+            employees = employeeRepository.findAll();
+        }
+        
+        return employees.stream().map(emp -> {
+            boolean isClockedIn = todayAttendance.stream()
+                .anyMatch(a -> a.getEmployee().getId().equals(emp.getId()) && a.getCheckIn() != null && a.getCheckOut() == null);
+            return new EmployeeOverviewDto(
+                emp.getId(), 
+                emp.getFirstName(), 
+                emp.getLastName(), 
+                emp.getDepartment() != null ? emp.getDepartment().getName() : "No Dept", 
+                isClockedIn
+            );
+        }).limit(search.isEmpty() ? 6 : 50).toList();
+    }
+
+    public record EmployeeOverviewDto(Long id, String firstName, String lastName, String department, boolean clockedIn) {}
 }
