@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMS - Payroll Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-users"></i> EMS
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="employees.html" class="nav-item"><i class="fa-solid fa-user-group"></i> Employees</a>
+                <a href="departments.html" class="nav-item"><i class="fa-solid fa-building"></i> Departments</a>
+                <a href="attendance.html" class="nav-item"><i class="fa-solid fa-calendar-check"></i> Attendance</a>
+                <a href="leaves.html" class="nav-item"><i class="fa-solid fa-calendar-minus"></i> Leaves</a>
+                <a href="payroll.html" class="nav-item active"><i class="fa-solid fa-money-check-dollar"></i> Payroll</a>
+                <a href="reports.html" class="nav-item"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+                <a href="documents.html" class="nav-item"><i class="fa-solid fa-folder-open"></i> Documents</a>
+                <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+                    <h2>Payroll Management</h2>
+                </div>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Search payroll...">
+                    </div>
+                    <div class="user-profile">
+                        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="content-area">
+                <div class="page-header-actions">
+                    <h3>Payroll Records</h3>
+                    <button class="btn-primary" onclick="openPayrollModal()"><i class="fa-solid fa-calculator"></i> Run Payroll</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Employee Name</th>
+                                <th>Month</th>
+                                <th>Basic Pay</th>
+                                <th>Allowances</th>
+                                <th>Deductions (inc. Tax)</th>
+                                <th>Net Salary</th>
+                                <th>Date Generated</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payrollTableBody">
+                            <tr>
+                                <td colspan="8" style="text-align: center; padding: 20px;">Loading payroll records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Run Payroll Modal -->
+    <div id="payrollModal" class="modal">
+        <div class="modal-content" style="width: 500px;">
+            <div class="modal-header">
+                <h2>Generate Payroll</h2>
+                <span class="close-btn" onclick="closePayrollModal()">&times;</span>
+            </div>
+            <form id="payrollForm">
+                <div id="formError" class="error-msg" style="display:none;"></div>
+                
+                <div class="form-row">
+                    <div class="input-group-modal" style="flex: 2;">
+                        <label>Employee</label>
+                        <select id="payrollEmployee" required onchange="handleEmployeeSelection()">
+                            <option value="">Select Employee...</option>
+                        </select>
+                    </div>
+                    <div class="input-group-modal" style="flex: 1;">
+                        <label>Month / Year</label>
+                        <input type="text" id="payrollMonth" placeholder="e.g. Oct 2026" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="input-group-modal">
+                        <label>Basic Pay (Auto-filled)</label>
+                        <input type="number" id="payrollBasic" step="0.01" required readonly style="background-color: #f8f9fa;">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group-modal">
+                        <label>Custom Allowances ($)</label>
+                        <input type="number" id="payrollAllowances" step="0.01" value="0.00" required>
+                    </div>
+                    <div class="input-group-modal">
+                        <label>Custom Deductions ($)</label>
+                        <input type="number" id="payrollDeductions" step="0.01" value="0.00" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closePayrollModal()">Cancel</button>
+                    <button type="submit" class="btn-primary" id="savePayrollBtn">Generate & Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Action completed successfully</div>
+
+    <script src="script.js"></script>
+    <script src="payroll.js"></script>
+</body>
+</html>
+
+

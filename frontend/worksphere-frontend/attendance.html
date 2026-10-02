@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMS - Attendance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-users"></i> EMS
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="employees.html" class="nav-item"><i class="fa-solid fa-user-group"></i> Employees</a>
+                <a href="departments.html" class="nav-item"><i class="fa-solid fa-building"></i> Departments</a>
+                <a href="attendance.html" class="nav-item active"><i class="fa-solid fa-calendar-check"></i> Attendance</a>
+                <a href="leaves.html" class="nav-item"><i class="fa-solid fa-calendar-minus"></i> Leaves</a>
+                <a href="payroll.html" class="nav-item"><i class="fa-solid fa-money-check-dollar"></i> Payroll</a>
+                <a href="reports.html" class="nav-item"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+                <a href="documents.html" class="nav-item"><i class="fa-solid fa-folder-open"></i> Documents</a>
+                <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+                    <h2>Attendance</h2>
+                </div>
+                <div class="header-actions">
+                    <div class="user-profile">
+                        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                        <span>Current User</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="content-area">
+                <div class="page-header-actions" style="margin-bottom: 30px;">
+                    <h3>My Timesheet</h3>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <select id="attEmployeeSelect" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);"></select>
+                        <button class="btn-primary" onclick="clockIn()" style="background-color: #2b8a3e;"><i class="fa-solid fa-right-to-bracket"></i> Clock In</button>
+                        <button class="btn-primary" onclick="clockOut()" style="background-color: #e03131;"><i class="fa-solid fa-right-from-bracket"></i> Clock Out</button>
+                    </div>
+                </div>
+
+                <div id="attError" class="error-msg" style="display:none; max-width: 600px; margin-bottom: 20px;"></div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Employee</th>
+                                <th>Clock In</th>
+                                <th>Clock Out</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceTableBody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; padding: 20px;">Loading...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Action completed successfully</div>
+
+    <script src="script.js"></script>
+    <script src="attendance.js"></script>
+</body>
+</html>
+

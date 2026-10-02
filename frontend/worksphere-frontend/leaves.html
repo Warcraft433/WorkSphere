@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMS - Leave Requests</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-users"></i> EMS
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="employees.html" class="nav-item"><i class="fa-solid fa-user-group"></i> Employees</a>
+                <a href="departments.html" class="nav-item"><i class="fa-solid fa-building"></i> Departments</a>
+                <a href="attendance.html" class="nav-item"><i class="fa-solid fa-calendar-check"></i> Attendance</a>
+                <a href="leaves.html" class="nav-item active"><i class="fa-solid fa-calendar-minus"></i> Leaves</a>
+                <a href="payroll.html" class="nav-item"><i class="fa-solid fa-money-check-dollar"></i> Payroll</a>
+                <a href="reports.html" class="nav-item"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+                <a href="documents.html" class="nav-item"><i class="fa-solid fa-folder-open"></i> Documents</a>
+                <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+                    <h2>Leave Requests</h2>
+                </div>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Search leaves...">
+                    </div>
+                    <div class="user-profile">
+                        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="content-area">
+                <div class="page-header-actions">
+                    <h3>All Requests</h3>
+                    <button class="btn-primary" onclick="openLeaveModal()"><i class="fa-solid fa-plus"></i> Apply Leave</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Employee</th>
+                                <th>Leave Type</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaveTableBody">
+                            <tr>
+                                <td colspan="8" style="text-align: center; padding: 20px;">Loading leaves...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Leave Request Modal -->
+    <div id="leaveModal" class="modal">
+        <div class="modal-content" style="width: 550px;">
+            <div class="modal-header">
+                <h2>Request Leave</h2>
+                <span class="close-btn" onclick="closeLeaveModal()">&times;</span>
+            </div>
+            <form id="leaveForm">
+                <div id="formError" class="error-msg" style="display:none;"></div>
+                
+                <div class="form-row">
+                    <div class="input-group-modal">
+                        <label>Employee</label>
+                        <select id="leaveEmployee" required>
+                            <option value="">Select Employee...</option>
+                            <!-- Dynamically populated -->
+                        </select>
+                    </div>
+                    <div class="input-group-modal">
+                        <label>Leave Type</label>
+                        <select id="leaveType" required>
+                            <option value="Casual Leave">Casual Leave</option>
+                            <option value="Sick Leave">Sick Leave</option>
+                            <option value="Annual Leave">Annual Leave</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="input-group-modal">
+                        <label>Start Date</label>
+                        <input type="date" id="leaveStart" required>
+                    </div>
+                    <div class="input-group-modal">
+                        <label>End Date</label>
+                        <input type="date" id="leaveEnd" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group-modal">
+                        <label>Reason</label>
+                        <textarea id="leaveReason" rows="3" style="padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit;" required></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeLeaveModal()">Cancel</button>
+                    <button type="submit" class="btn-primary" id="saveLeaveBtn">Submit Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Action completed successfully</div>
+
+    <script src="script.js"></script>
+    <script src="leaves.js"></script>
+</body>
+</html>
+
+

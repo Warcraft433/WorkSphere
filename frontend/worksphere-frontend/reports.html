@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMS - Reports</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-users"></i> EMS
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="employees.html" class="nav-item"><i class="fa-solid fa-user-group"></i> Employees</a>
+                <a href="departments.html" class="nav-item"><i class="fa-solid fa-building"></i> Departments</a>
+                <a href="attendance.html" class="nav-item"><i class="fa-solid fa-calendar-check"></i> Attendance</a>
+                <a href="leaves.html" class="nav-item"><i class="fa-solid fa-calendar-minus"></i> Leaves</a>
+                <a href="payroll.html" class="nav-item"><i class="fa-solid fa-money-check-dollar"></i> Payroll</a>
+                <a href="reports.html" class="nav-item active"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+                <a href="documents.html" class="nav-item"><i class="fa-solid fa-folder-open"></i> Documents</a>
+                <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+                    <h2>Reports & Analytics</h2>
+                </div>
+                <div class="header-actions">
+                    <div class="user-profile">
+                        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="content-area">
+                
+                <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    
+                    <!-- Employee Report Card -->
+                    <div class="stat-card" style="display:flex; flex-direction:column; justify-content:space-between; padding: 30px;">
+                        <div style="display:flex; align-items:center; gap: 15px; margin-bottom: 20px;">
+                            <div class="activity-icon" style="width:50px; height:50px; font-size:1.5rem;"><i class="fa-regular fa-file-excel"></i></div>
+                            <div>
+                                <h3 style="font-size:1.2rem; color:var(--primary-color);">Employee Master List</h3>
+                                <p style="color:var(--text-muted); font-size:0.9rem;">Complete directory of all registered employees.</p>
+                            </div>
+                        </div>
+                        <button class="btn-primary" onclick="downloadEmployeeReport()" id="btnEmpReport"><i class="fa-solid fa-download"></i> Download CSV</button>
+                    </div>
+
+                    <!-- Coming Soon Card -->
+                    <div class="stat-card" style="display:flex; flex-direction:column; justify-content:space-between; padding: 30px; opacity:0.6;">
+                        <div style="display:flex; align-items:center; gap: 15px; margin-bottom: 20px;">
+                            <div class="activity-icon" style="width:50px; height:50px; font-size:1.5rem;"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                            <div>
+                                <h3 style="font-size:1.2rem; color:var(--primary-color);">Monthly Payroll Report</h3>
+                                <p style="color:var(--text-muted); font-size:0.9rem;">Aggregated salary and tax deductions.</p>
+                            </div>
+                        </div>
+                        <button class="btn-primary" disabled style="background-color:var(--text-muted);"><i class="fa-solid fa-lock"></i> Coming Soon</button>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Action completed successfully</div>
+
+    <script src="script.js"></script>
+    <script src="reports.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMS - Departments & Designations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-users"></i> EMS
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="employees.html" class="nav-item"><i class="fa-solid fa-user-group"></i> Employees</a>
+                <a href="departments.html" class="nav-item active"><i class="fa-solid fa-building"></i> Departments</a>
+                <a href="attendance.html" class="nav-item"><i class="fa-solid fa-calendar-check"></i> Attendance</a>
+                <a href="leaves.html" class="nav-item"><i class="fa-solid fa-calendar-minus"></i> Leaves</a>
+                <a href="payroll.html" class="nav-item"><i class="fa-solid fa-money-check-dollar"></i> Payroll</a>
+                <a href="reports.html" class="nav-item"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+                <a href="documents.html" class="nav-item"><i class="fa-solid fa-folder-open"></i> Documents</a>
+                <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+                    <h2>Departments</h2>
+                </div>
+                <div class="header-actions">
+                    <div class="user-profile">
+                        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                        <span>Current User</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="content-area">
+                <div class="page-header-actions" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                    <h3>All Departments</h3>
+                    <button class="btn-primary" onclick="openDeptModal()"><i class="fa-solid fa-plus"></i> Add Department</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Department Name</th>
+                                <th>Location</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deptTableBody">
+                            <tr>
+                                <td colspan="4" style="text-align: center; padding: 20px;">Loading departments...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Department Modal -->
+    <div id="deptModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Department</h3>
+                <span class="close-modal" onclick="closeDeptModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="deptForm">
+                    <input type="hidden" id="deptId">
+                    <div class="form-group">
+                        <label>Department Name</label>
+                        <input type="text" id="deptName" required placeholder="e.g. Engineering">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="deptLocation" required placeholder="e.g. New York">
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%; margin-top: 15px;">Save Department</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Action completed successfully</div>
+
+    <script src="script.js"></script>
+    <script src="departments.js"></script>
+</body>
+</html>
