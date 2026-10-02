@@ -13,11 +13,7 @@ WORKDIR /app
 COPY --from=build /app/target/worksphere-backend-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 
-# Environment variables to override in docker-compose or Kubernetes
-ENV SPRING_PROFILES_ACTIVE=prod
-ENV DB_URL=jdbc:mysql://mysql:3306/worksphere_db
-ENV DB_USER=root
-ENV DB_PASSWORD=root
+# Environment variables to override
 ENV JWT_SECRET=YOUR_VERY_SECURE_SECRET_KEY_FOR_PROD_123
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
