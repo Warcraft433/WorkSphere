@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -60,8 +60,11 @@
             <main class="content-area">
                 <div class="page-header-actions">
                     <h3>Payroll Records</h3>
-                    <button class="btn-primary" onclick="openPayrollModal()"><i class="fa-solid fa-calculator"></i> Run Payroll</button>
+                    <button class="btn-primary" onclick="openPayrollModal()" style="width:auto;padding:10px 18px"><i class="fa-solid fa-calculator"></i> Run Payroll</button>
                 </div>
+
+                <!-- Summary Cards -->
+                <div class="payroll-summary-cards" id="payrollSummaryCards" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px"></div>
 
                 <div class="table-container">
                     <table class="data-table">

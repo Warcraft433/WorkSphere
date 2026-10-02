@@ -35,9 +35,19 @@ async function loadPayroll() {
         tbody.innerHTML = '';
         
         if (payrolls.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No payroll records found.</td></tr>';
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--text-muted)">
+                <i class="fa-solid fa-money-check-dollar" style="font-size:2rem;display:block;margin-bottom:10px;opacity:0.4"></i>
+                No payroll records found. Click <strong>Run Payroll</strong> to generate the first one.
+            </td></tr>`;
+            updateSummaryCards([], 0);
             return;
         }
+
+        // Compute totals for summary cards
+        const totalNet = payrolls.reduce((sum, p) => sum + (p.netSalary || 0), 0);
+        const totalBasic = payrolls.reduce((sum, p) => sum + (p.basicSalary || 0), 0);
+        const totalDeductions = payrolls.reduce((sum, p) => sum + (p.deductions || 0), 0);
+        updateSummaryCards(payrolls, totalNet, totalBasic, totalDeductions);
 
         payrolls.forEach(record => {
             const empName = record.employee ? `${record.employee.firstName} ${record.employee.lastName}` : 'Unknown';
@@ -62,7 +72,36 @@ async function loadPayroll() {
     }
 }
 
+function updateSummaryCards(payrolls, totalNet = 0, totalBasic = 0, totalDeductions = 0) {
+    const container = document.getElementById('payrollSummaryCards');
+    if (!container) return;
+    container.innerHTML = `
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3><i class="fa-solid fa-file-invoice-dollar" style="color:var(--primary-color);margin-right:6px"></i>Total Records</h3>
+                <div class="stat-value">${payrolls.length}</div>
+                <span class="stat-subtext">Payroll entries</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3><i class="fa-solid fa-money-bill-wave" style="color:var(--success);margin-right:6px"></i>Total Net Pay</h3>
+                <div class="stat-value" style="font-size:1.5rem">${currencyFormatter.format(totalNet)}</div>
+                <span class="stat-subtext">All employees combined</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3><i class="fa-solid fa-circle-minus" style="color:var(--danger);margin-right:6px"></i>Total Deductions</h3>
+                <div class="stat-value" style="font-size:1.5rem;color:var(--danger)">${currencyFormatter.format(totalDeductions)}</div>
+                <span class="stat-subtext">Tax + custom deductions</span>
+            </div>
+        </div>
+    `;
+}
+
 async function loadEmployeesForPayroll() {
+
     try {
         const response = await fetchWithAuth('/employees');
         if (!response) return;
