@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EMS - Attendance</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (function() {
+            const t = localStorage.getItem('ws_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -24,6 +30,7 @@
                 <a href="payroll.html" class="nav-item"><i class="fa-solid fa-money-check-dollar"></i> Payroll</a>
                 <a href="reports.html" class="nav-item"><i class="fa-solid fa-chart-bar"></i> Reports</a>
                 <a href="documents.html" class="nav-item"><i class="fa-solid fa-folder-open"></i> Documents</a>
+                <a href="user-management.html" class="nav-item admin-only"><i class="fa-solid fa-users-gear"></i> User Management</a>
                 <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
             </nav>
         </aside>
@@ -37,6 +44,7 @@
                     <h2>Attendance</h2>
                 </div>
                 <div class="header-actions">
+                    <button class="theme-toggle-btn" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i><span>Dark Mode</span></button>
                     <div class="user-profile">
                         <div class="avatar"><i class="fa-solid fa-user"></i></div>
                         <span>Current User</span>
@@ -86,4 +94,7 @@
     <script src="attendance.js"></script>
 </body>
 </html>
+
+
+
 

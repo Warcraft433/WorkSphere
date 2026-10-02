@@ -14,7 +14,7 @@ public class Payroll {
     @JoinColumn(name = "employee_id")
     private Employee employee;
     
-    @Column(length = 7)
+    @Column(name = "pay_month", length = 7)
     private String month;
     
     private Double basicSalary;

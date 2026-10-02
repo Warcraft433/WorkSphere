@@ -60,7 +60,8 @@ async function loadEmployeesForDocs() {
         const response = await fetchWithAuth('/employees');
         if (!response) return;
         
-        const employees = await response.json();
+        const data = await response.json();
+        const employees = Array.isArray(data) ? data : (data.content || []);
         const select = document.getElementById('docEmployee');
         
         employees.forEach(emp => {

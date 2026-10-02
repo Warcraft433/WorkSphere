@@ -1,36 +1,41 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMS - Dashboard</title>
+    <title>WorkSphere – Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        // Prevent dark mode flash
+        (function() {
+            const t = localStorage.getItem('ws_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
 </head>
 <body>
     <div class="dashboard-layout">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="sidebar-brand">
-                <i class="fa-solid fa-users"></i> EMS
-            </div>
+            <div class="sidebar-brand"><i class="fa-solid fa-layer-group"></i> WorkSphere</div>
             <nav class="sidebar-nav">
-                <a href="index.html" class="nav-item active"><i class="fa-solid fa-border-all"></i> Dashboard</a>
-                <a href="employees.html" class="nav-item"><i class="fa-solid fa-user-group"></i> Employees</a>
+                <a href="index.html"       class="nav-item active"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="employees.html"   class="nav-item"><i class="fa-solid fa-user-group"></i> Employees</a>
                 <a href="departments.html" class="nav-item"><i class="fa-solid fa-building"></i> Departments</a>
-                <a href="attendance.html" class="nav-item"><i class="fa-solid fa-calendar-check"></i> Attendance</a>
-                <a href="leaves.html" class="nav-item"><i class="fa-solid fa-calendar-minus"></i> Leaves</a>
-                <a href="payroll.html" class="nav-item"><i class="fa-solid fa-money-check-dollar"></i> Payroll</a>
-                <a href="reports.html" class="nav-item"><i class="fa-solid fa-chart-bar"></i> Reports</a>
-                <a href="documents.html" class="nav-item"><i class="fa-solid fa-folder-open"></i> Documents</a>
-                <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a href="attendance.html"  class="nav-item"><i class="fa-solid fa-calendar-check"></i> Attendance</a>
+                <a href="leaves.html"      class="nav-item"><i class="fa-solid fa-calendar-minus"></i> Leaves</a>
+                <a href="payroll.html"     class="nav-item"><i class="fa-solid fa-money-check-dollar"></i> Payroll</a>
+                <a href="reports.html"     class="nav-item"><i class="fa-solid fa-chart-bar"></i> Reports</a>
+                <a href="documents.html"   class="nav-item"><i class="fa-solid fa-folder-open"></i> Documents</a>
+                <a href="user-management.html" class="nav-item admin-only"><i class="fa-solid fa-users-gear"></i> User Management</a>
+                <a href="settings.html"    class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
             </nav>
         </aside>
 
         <!-- Main Content -->
         <div class="main-wrapper">
-            <!-- Header -->
             <header class="top-header">
                 <div class="header-title">
                     <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
@@ -39,82 +44,69 @@
                 <div class="header-actions">
                     <div class="search-bar">
                         <i class="fa-solid fa-search"></i>
-                        <input type="text" placeholder="Search here...">
+                        <input type="text" placeholder="Search...">
                     </div>
+                    <button class="theme-toggle-btn" onclick="toggleTheme()">
+                        <i class="fa-solid fa-moon"></i><span>Dark Mode</span>
+                    </button>
                     <div class="user-profile">
                         <div class="avatar"><i class="fa-solid fa-user"></i></div>
                         <span>Admin</span>
-                        <i class="fa-solid fa-chevron-down"></i>
+                        <i class="fa-solid fa-chevron-down" style="font-size:0.75rem;color:var(--text-muted)"></i>
                     </div>
                 </div>
             </header>
 
-            <!-- Dashboard Content -->
             <main class="content-area">
+                <!-- Stats Grid -->
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-info">
-                            <h3>Employees</h3>
-                            <div class="stat-value" id="totalEmployees">-</div>
-                            <span class="stat-subtext">Total Employees</span>
+                            <h3><i class="fa-solid fa-users" style="color:var(--primary-color);margin-right:6px"></i>Employees</h3>
+                            <div class="stat-value" id="totalEmployees">–</div>
+                            <span class="stat-subtext">Total registered</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-info">
-                            <h3>Departments</h3>
-                            <div class="stat-value" id="totalDepartments">-</div>
-                            <span class="stat-subtext">Total Departments</span>
+                            <h3><i class="fa-solid fa-building" style="color:#7950f2;margin-right:6px"></i>Departments</h3>
+                            <div class="stat-value" id="totalDepartments">–</div>
+                            <span class="stat-subtext">Active departments</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-info">
-                            <h3>Attendance</h3>
-                            <div class="stat-value">92%</div>
-                            <span class="stat-subtext text-success"><i class="fa-solid fa-arrow-trend-up"></i> 5% this month</span>
+                            <h3><i class="fa-solid fa-calendar-check" style="color:var(--success);margin-right:6px"></i>Present Today</h3>
+                            <div class="stat-value" id="presentToday">–</div>
+                            <span class="stat-subtext" id="clockedInSub">clocked in now: –</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-info">
-                            <h3>Pending Leaves</h3>
-                            <div class="stat-value" id="pendingLeaves">-</div>
-                            <span class="stat-subtext">Requests</span>
+                            <h3><i class="fa-solid fa-calendar-minus" style="color:var(--warning);margin-right:6px"></i>Pending Leaves</h3>
+                            <div class="stat-value" id="pendingLeaves">–</div>
+                            <span class="stat-subtext">Awaiting approval</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="dashboard-charts">
+                    <!-- Employee Overview -->
                     <div class="chart-container">
                         <h3>Employee Overview</h3>
-                        <div class="chart-placeholder">
-                            <i class="fa-solid fa-chart-line text-muted" style="font-size: 3rem;"></i>
+                        <div class="chart-placeholder" id="employeeOverview">
+                            <i class="fa-solid fa-spinner fa-spin" style="font-size:2rem;color:var(--text-muted)"></i>
                         </div>
                     </div>
+
+                    <!-- Recent Activity -->
                     <div class="activities-container">
                         <div class="activities-header">
-                            <h3>Recent Activities</h3>
-                            <a href="#">View All</a>
+                            <h3>Recent Activity</h3>
                         </div>
-                        <div class="activity-list">
-                            <div class="activity-item">
-                                <div class="activity-icon"><i class="fa-solid fa-user-plus"></i></div>
-                                <div class="activity-details">
-                                    <p>New employee <strong>John Doe</strong> added</p>
-                                </div>
-                                <div class="activity-time">10 mins ago</div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon"><i class="fa-solid fa-calendar-minus"></i></div>
-                                <div class="activity-details">
-                                    <p>Leave request by <strong>Sarah Wilson</strong></p>
-                                </div>
-                                <div class="activity-time">1 hour ago</div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon"><i class="fa-solid fa-money-check-dollar"></i></div>
-                                <div class="activity-details">
-                                    <p>Payroll for May generated</p>
-                                </div>
-                                <div class="activity-time">3 hours ago</div>
+                        <div class="activity-list" id="activityList">
+                            <div style="text-align:center;padding:20px;color:var(--text-muted)">
+                                <i class="fa-solid fa-spinner fa-spin"></i> Loading...
                             </div>
                         </div>
                     </div>
@@ -122,8 +114,8 @@
             </main>
         </div>
     </div>
+
     <script src="script.js"></script>
     <script src="index.js"></script>
 </body>
 </html>
-

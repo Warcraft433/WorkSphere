@@ -80,7 +80,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<!-- No scope=runtime: must be on compile classpath for Spring Boot devtools -->
 		</dependency>
 
 		<dependency>
